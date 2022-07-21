@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Mobile Web</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="./../style.css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1 class="header">Cyber Shop</h1>
+    </header>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!--Danh sách sản phẩm -->
+      <div role="tabpanel" class="tab-pane  in active" id="DanhSachSP">
+        <div class="row">
+          <div class="col-md-8">
+           
+            <div class="col-md-4">
+              <p>Chọn loại máy</p>
+              <select class="custom-select" id="filter" onchange="filterPhone()">
+                <option value="all" selected>All</option>
+                <option value="iphone">iPhone</option>
+                <option value="samsung">Samsung</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-4 input-group mb-3">
+            <input type="text" class="form-control" placeholder="Nhập từ khóa" id="inputSearch"
+              oninput="searchPhone()" />
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>
+            </div>
+
+          </div>  
+    
+
+
+        </div>
+        <div class="row">
+          <button onclick="showCart()" type="button" class="btn btn-primary" data-toggle="modal"
+          data-target="#exampleModal">
+          Giỏ hàng
+          <i class="fa-solid fa-cart-shopping"></i>
+        </button>
+         </div>
+        <div class="clear-fix"></div>
+        <div class="tblSanPham" id="tblSanPham">
+          <!-- loading -->
+          <div id="loading" style="display:none ;" class="loader"></div>
+          <!-- BEGIN TABLE SẢN PHẨM -->
+          <table class="table table-bordered">
+            <thead>
+              <th>STT</th>
+              <th>Name</th>
+              <th>Img</th>
+              <th>Price</th>
+              <th>Screen</th>
+              <th>BackCamere</th>
+              <th>FrontCamera</th>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Action</th>
+
+            </thead>
+            <tbody id="tblDanhSachSP"></tbody>
+          </table>
+          <!-- END TABLE SẢN PHẨM -->
+        </div>
+        <br />
+      </div>
+      <!-- Kết thúc danh sách sản phẩm -->
+    </div>
+    <!-- gio hang -->
+    <!-- Button trigger modal -->
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Sản phẩm đã chọn</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body ">
+            <table class="table table-img">
+              <thead>
+                <tr>
+                  <th>Stt</th>
+                  <th>Name</th>
+                  <th>Image</th>
+                  <th>Price</th>
+                  <th>Description</th>
+                  <th>Quantity</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="tblcart">
+              </tbody>
+            </table>
+            <div class="total">Tổng tiền: <span class="totalPrice" id="totalPrice">
+              </span> 
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            <button onclick="renderbill()" type="button" class="btn btn-primary">Thanh toán</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- The Modal -->
+
+    <div class="modal fade" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Add product</h4>
+            <button id="btnCloseModel" type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+          <!-- Modal body -->
+          <div class="modal-body">
+            <input id="productId" type="hidden" />
+            <div class="form-group">
+              <label>Tên Sản Phẩm</label>
+              <input id="TenSP" class="form-control" placeholder="Nhập vào tên sản phẩm" />
+              <span id="spanTenSP" class="text-danger"></span>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <label>Giá</label>
+                <input id="GiaSP" class="form-control" placeholder="Nhập vào giá" />
+                <span id="spanGiaSP" class="text-danger"></span>
+              </div>
+              <div class="col-6">
+                <label>Kích thước</label>
+                <input id="Kichthuoc" class="form-control" placeholder="Nhập vào kích thước" />
+                <span id="spanKichThuoc" class="text-danger"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <label>Camera sau</label>
+                <input id="BackCam" class="form-control" placeholder="Kích thước camera trước" />
+                <span id="spanCamSau" class="text-danger"></span>
+              </div>
+              <div class="col-6">
+                <label>Camera trước</label>
+                <input id="FrontCam" class="form-control" placeholder="Kích thước camera trước" />
+                <span id="spanCamTruoc" class="text-danger"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <label>Hình Ảnh</label>
+                <input id="HinhSP" class="form-control" placeholder="Nhập vào hình sản phẩm" />
+                <span id="spanHinhAnh" class="text-danger"></span>
+              </div>
+              <div class="col-6">
+                <label>Loại</label>
+                <input id="Loai" class="form-control" placeholder="Hãng sản phẩm" />
+                <span id="spanLoai" class="text-danger"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="">Mô tả </label>
+              <textarea class="form-control" id="MoTa" cols=30" rows="5"></textarea>
+              <span id="spanMoTa" class="text-danger"></span>
+            </div>
+
+          </div>
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button onclick="createProduct()" id="btnSaveInfo" class="btn btn-success">Thêm sản phẩm</button>
+
+            <button onclick="updateProduct()" id="btnUpdate" class="btn btn-info" style="display: none;">
+              Lưu thay đổi
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </div>
+
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+
+
+  <script src="../models/cart.js"></script>
+  <script src="../models/produts.js"></script>
+  <script src="../controller/index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+#btnThemSP {
+  margin-bottom: 20px;
+}
+body{
+    background-color: #e1c3fc;
+}
+header h1{
+    text-align: center;
+    color: 30px;
+    margin: 40px 0;
+    
+}
+.header{
+  font-size: 45px;
+  color: rgb(99, 99, 218);
+}
+.nav-tabs {
+  border: none;
+}
+.nav-tabs .nav-link {
+  border: none;
+}
+.modal-header{
+  padding: 10px 15px 0 15px;
+}
+.input-group-text{
+  height: 50px;
+}
+.form-control{
+  height: 50px;
+}
+
+.btn{
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+th{
+  text-align: center;
+}
+td{
+  text-align: center;
+}
+.loader {
+  border: 16px solid #f3f3f3;
+  /* Light grey */
+  border-top: 15px solid #3498db;
+  /* Blue */
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
